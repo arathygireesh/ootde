@@ -49,7 +49,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             });
           },
           selectedItemColor: const Color(0xFF6B21A8),
-          unselectedItemColor: Colors.grey.shade500,
+          unselectedItemColor: const Color.fromARGB(198, 158, 158, 158),
           backgroundColor: Colors.white,
           type: BottomNavigationBarType.fixed,
           selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
