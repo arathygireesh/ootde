@@ -98,6 +98,7 @@ class _OutfitSuggestionScreenState extends ConsumerState<OutfitSuggestionScreen>
         });
       }
     } catch (e) {
+      debugPrint('[Avatar Generation Error] $e');
       // Demo avatar rendering fallback
       await Future.delayed(const Duration(milliseconds: 1400));
       if (mounted) {
@@ -476,18 +477,27 @@ class _OutfitSuggestionScreenState extends ConsumerState<OutfitSuggestionScreen>
                               borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
                               child: Stack(
                                 children: [
-                                  Image.network(
-                                    _generatedAvatarData!['ai_generated_image_url'],
-                                    height: 280,
-                                    width: double.infinity,
-                                    fit: BoxFit.cover,
-                                    errorBuilder: (context, error, stackTrace) => Container(
-                                      height: 280,
-                                      color: const Color(0xFFF3E8FF),
-                                      child: const Center(
-                                        child: Icon(Icons.checkroom_rounded, size: 64, color: Color(0xFF9333EA)),
-                                      ),
-                                    ),
+                                  Builder(
+                                    builder: (context) {
+                                      String avatarUrl = (_generatedAvatarData!['ai_generated_image_url'] ?? '').toString();
+                                      if (avatarUrl.isNotEmpty && !avatarUrl.startsWith('http')) {
+                                        final serverBase = ApiService.baseUrl.replaceAll('/api', '');
+                                        avatarUrl = '$serverBase${avatarUrl.startsWith('/') ? '' : '/'}$avatarUrl';
+                                      }
+                                      return Image.network(
+                                        avatarUrl,
+                                        height: 280,
+                                        width: double.infinity,
+                                        fit: BoxFit.cover,
+                                        errorBuilder: (context, error, stackTrace) => Container(
+                                          height: 280,
+                                          color: const Color(0xFFF3E8FF),
+                                          child: const Center(
+                                            child: Icon(Icons.checkroom_rounded, size: 64, color: Color(0xFF9333EA)),
+                                          ),
+                                        ),
+                                      );
+                                    },
                                   ),
                                   Positioned(
                                     top: 14,

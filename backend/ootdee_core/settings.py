@@ -5,8 +5,12 @@ Django settings for ootdee_core project.
 from pathlib import Path
 from datetime import timedelta
 import os
+from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Load environment variables from .env file
+load_dotenv(BASE_DIR / '.env')
 
 SECRET_KEY = 'django-insecure-6)1#o$7rqy4+_d!pl7e=z1d()8c#0m*7t+0_rglxtf+d_ka5#-'
 
@@ -102,3 +106,15 @@ USE_TZ = True
 STATIC_URL = 'static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Gemini AI API Configuration
+GEMINI_API_KEY = os.getenv('GEMINI_API_KEY', '')
+
+# Hugging Face API Configuration (for image generation)
+HUGGINGFACE_API_TOKEN = os.getenv('HUGGINGFACE_API_TOKEN', '')
+
+# Cloudinary Configuration
+CLOUDINARY_CLOUD_NAME = os.getenv('CLOUDINARY_CLOUD_NAME', '')
+CLOUDINARY_API_KEY = os.getenv('CLOUDINARY_API_KEY', '')
+CLOUDINARY_API_SECRET = os.getenv('CLOUDINARY_API_SECRET', '')
+CLOUDINARY_URL = os.getenv('CLOUDINARY_URL', '')

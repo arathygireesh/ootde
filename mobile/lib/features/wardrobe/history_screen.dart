@@ -176,15 +176,24 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
                             ClipRRect(
                               child: AspectRatio(
                                 aspectRatio: 1.2,
-                                child: Image.network(
-                                  imageUrl,
-                                  fit: BoxFit.cover,
-                                  errorBuilder: (context, error, stackTrace) => Container(
-                                    color: const Color(0xFFFAF5FF),
-                                    child: const Center(
-                                      child: Icon(Icons.checkroom_rounded, color: Color(0xFF6B21A8), size: 48),
-                                    ),
-                                  ),
+                                child: Builder(
+                                  builder: (context) {
+                                    String netUrl = imageUrl;
+                                    if (!netUrl.startsWith('http')) {
+                                      final serverBase = ApiService.baseUrl.replaceAll('/api', '');
+                                      netUrl = '$serverBase${netUrl.startsWith('/') ? '' : '/'}$netUrl';
+                                    }
+                                    return Image.network(
+                                      netUrl,
+                                      fit: BoxFit.cover,
+                                      errorBuilder: (context, error, stackTrace) => Container(
+                                        color: const Color(0xFFFAF5FF),
+                                        child: const Center(
+                                          child: Icon(Icons.checkroom_rounded, color: Color(0xFF6B21A8), size: 48),
+                                        ),
+                                      ),
+                                    );
+                                  },
                                 ),
                               ),
                             ),
