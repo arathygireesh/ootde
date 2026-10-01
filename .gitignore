@@ -1,0 +1,47 @@
+# ===========================================================================
+# Root .gitignore for OOTDee (Backend + Mobile)
+# ===========================================================================
+
+# Environment & API Keys (Crucial for Security)
+**/.env
+**/.env.*
+!**/.env.example
+
+# Database & Local Media Uploads
+**/db.sqlite3
+**/db.sqlite3-journal
+**/media/
+
+# Python & Virtual Environments
+**/__pycache__/
+*.py[cod]
+*$py.class
+**/.venv/
+**/env/
+**/ENV/
+
+# Flutter / Dart Build Outputs & Dependencies
+**/.dart_tool/
+**/build/
+**/.flutter-plugins
+**/.flutter-plugins-dependencies
+**/.pub-cache/
+**/.pub/
+**/generated_plugin_registrant.*
+**/generated_plugins.cmake
+**/GeneratedPluginRegistrant.*
+
+# IDE & Editor Configurations
+.vscode/
+.idea/
+*.iml
+*.ipr
+*.iws
+*.swp
+*.swo
+
+# OS Generated Files & Logs
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.log

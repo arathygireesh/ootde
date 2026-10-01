@@ -18,8 +18,8 @@ class ApiService {
   final Dio _dio = Dio(
     BaseOptions(
       baseUrl: 'http://127.0.0.1:8000/api',
-      connectTimeout: const Duration(seconds: 4),
-      receiveTimeout: const Duration(seconds: 4),
+      connectTimeout: const Duration(seconds: 15),
+      receiveTimeout: const Duration(seconds: 90),
     ),
   );
   final FlutterSecureStorage _storage = const FlutterSecureStorage();
@@ -56,8 +56,8 @@ class ApiService {
                     options: Options(
                       method: opts.method,
                       headers: opts.headers,
-                      sendTimeout: const Duration(seconds: 3),
-                      receiveTimeout: const Duration(seconds: 3),
+                      sendTimeout: const Duration(seconds: 15),
+                      receiveTimeout: const Duration(seconds: 90),
                     ),
                   );
                   return handler.resolve(response);
@@ -166,9 +166,16 @@ class ApiService {
   }
 
   Future<Map<String, dynamic>> suggestOutfitOptions({required String occasion}) async {
-    final res = await _dio.post('/wardrobe/suggest-options/', data: {
-      'occasion': occasion,
-    });
+    final res = await _dio.post(
+      '/wardrobe/suggest-options/',
+      data: {
+        'occasion': occasion,
+      },
+      options: Options(
+        sendTimeout: const Duration(seconds: 30),
+        receiveTimeout: const Duration(seconds: 60),
+      ),
+    );
     return res.data;
   }
 
@@ -176,10 +183,17 @@ class ApiService {
     required String occasion,
     required List<dynamic> itemIds,
   }) async {
-    final res = await _dio.post('/wardrobe/generate-avatar/', data: {
-      'occasion': occasion,
-      'item_ids': itemIds,
-    });
+    final res = await _dio.post(
+      '/wardrobe/generate-avatar/',
+      data: {
+        'occasion': occasion,
+        'item_ids': itemIds,
+      },
+      options: Options(
+        sendTimeout: const Duration(seconds: 30),
+        receiveTimeout: const Duration(seconds: 90),
+      ),
+    );
     return res.data;
   }
 

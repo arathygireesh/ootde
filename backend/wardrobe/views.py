@@ -41,7 +41,7 @@ class GenerateAvatarOutfitView(APIView):
         occasion = request.data.get('occasion', 'Casual')
         item_ids = request.data.get('item_ids', [])
         outfit = generate_avatar_image_for_items(request.user, occasion, item_ids)
-        serializer = OutfitSerializer(outfit)
+        serializer = OutfitSerializer(outfit, context={'request': request})
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 class OutfitHistoryListView(generics.ListAPIView):
